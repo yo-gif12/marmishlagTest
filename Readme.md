@@ -1,8 +1,6 @@
-##Marmishlag
+Marmishlag
 #
-lancez la commande
-#
-docker-compose up -d
+lancez la commande:  ```docker-compose up -d```
 #
 phpmyadmin : http://localhost:8080/
 site : http://localhost:3320/
