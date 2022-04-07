@@ -27,10 +27,10 @@
             <label class="block text-gray-700 mt-4" for="user_email">Adresse de messagerie</label>
             <input class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" name="user_email" placeholder="Email" type="text">
             <label class="block text-gray-700 mt-4" for="user_login">Pseudo</label>
-            <input class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" name="user_login" placeholder="Username" type="text">
+            <input class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" name="user_login" placeholder="Nom d'utilisateur" type="text">
             <label class="block text-gray-700 mt-4" for="user_pass">Mot de passe</label>
             <input class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
-            focus:bg-white focus:outline-none" required name="user_pass" placeholder="Password" type="pwd">
+            focus:bg-white focus:outline-none" required name="user_pass" placeholder="Mot de passe" type="pwd">
             <?php wp_referer_field(); ?>
             <input type="hidden" name="action" value="wpregister_marmishlag_form">
             <button class="w-full block bg-fuchsia-700 hover:bg-fuchsia-400 focus:bg-fuchsia-400 text-white rounded-lg

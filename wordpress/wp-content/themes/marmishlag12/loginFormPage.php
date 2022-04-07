@@ -24,9 +24,9 @@
 
       <form action="<?php echo home_url('wp-login.php'); ?>" method="post">
         <label class="block text-gray-700 mt-4" for="log">Identifiant ou adresse de messagerie</label>
-        <input type="text" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-fuchsia-700 focus:bg-white focus:outline-none" autofocus autocomplete required name="log">
+        <input type="text" placeholder="Entrez votre email" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-fuchsia-700 focus:bg-white focus:outline-none" autofocus autocomplete required name="log">
         <label class="block text-gray-700 mt-4" for="pwd">Mot de passe</label>
-        <input type="password" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-fuchsia-700
+        <input type="password" placeholder="Entrez votre Mot de passe" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-fuchsia-700
         focus:bg-white focus:outline-none" required name="pwd">
         <input type="hidden" name="redirect_to", value="<?= home_url() ?>">
         <button type="submit" class="w-full block bg-fuchsia-700 hover:bg-fuchsia-400 focus:bg-fuchsia-400 text-white rounded-lg
