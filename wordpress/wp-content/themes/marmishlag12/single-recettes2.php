@@ -1,5 +1,7 @@
 <?php get_header(); ?>
 
+<?php if (have_posts()) : ?>
+        <?php while (have_posts()) : the_post(); ?>
 <main class="relative bg-white py-32 rounded-3xl shadow-xl mt-20 mb-32">
    <figure> 
       <img class="single-post-image" src="<?php the_post_thumbnail_url(); ?>" class="mx-auto" alt="">
@@ -49,6 +51,7 @@
           <span class="ml-1 lg:text-md"><?= get_field('calorie') ?> kcal</span>
       </div>
 </div>
+<?php comments_template(); ?>
 
 <a class="flex flex-row items-center cursor-pointer absolute top-0 left-0 mt-8 left-8 text-fuchsia-700 text-lg uppercase" onclick="history.back();">
 <svg xmlns="http://www.w3.org/2000/svg" class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="rgb(162 28 175)">
@@ -58,5 +61,9 @@
 </a>
 
 </main>
+
+<?php endwhile; ?>
+    <?php endif; ?>
+
 
 <?php get_footer(); ?>

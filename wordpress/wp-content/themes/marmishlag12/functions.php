@@ -145,7 +145,7 @@ function cptui_register_my_cpts() {
 		"rewrite" => [ "slug" => "recettes2", "with_front" => true ],
 		"query_var" => true,
 		"menu_icon" => "dashicons-carrot",
-		"supports" => [ "title", "editor", "thumbnail", "custom-fields" ],
+		"supports" => [ "title", "editor", "thumbnail", "custom-fields", "comments" ],
 		"show_in_graphql" => false,
         "capabilities" => array(
             "edit_post" => "edit_recipes",
@@ -238,4 +238,12 @@ if ( !empty( $terms ) ){
     $term = array_shift( $terms );
     echo $term->slug;
 }
+
+
+// Activation des commentaires
+function enable_comments_for_all(){
+    global $wpdb;
+    $wpdb->query( $wpdb->prepare("UPDATE $wpdb->posts SET comment_status = 'open'")); // Enable comments
+    $wpdb->query( $wpdb->prepare("UPDATE $wpdb->posts SET ping_status = 'open'")); // Enable trackbacks
+} enable_comments_for_all();
 ?>
