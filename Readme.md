@@ -12,6 +12,6 @@ password : password
 #
 Allez sur phpmyadmin importer la base de donnée marmishlag puis allez sur le lien du site web marmishlag.
 #
-user : test
+user : test1
 #
 password : test1234
