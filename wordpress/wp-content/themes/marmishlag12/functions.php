@@ -210,7 +210,7 @@ function montheme_pagination(){
 
 // Fonction Inscription
 function postUserRegisterForm (){
-    $userData = ['role' => 'author'];
+    $userData = ['role' => 'custom_contributor'];
     $userData = array_merge($userData, $_POST);
     unset($userData['_wp_http_referer']);
     unset($userData['action']);
@@ -222,6 +222,7 @@ function postUserRegisterForm (){
 }
 
 add_action('admin_post_wpregister_marmishlag_form', 'postUserRegisterForm');
+add_action('admin_post_nopriv_wpregister_marmishlag_form', 'postUserRegisterForm');
 
 // Redirection à la login/déconnexion
 function ps_redirect(){
