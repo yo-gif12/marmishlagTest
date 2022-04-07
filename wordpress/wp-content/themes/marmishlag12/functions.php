@@ -210,18 +210,18 @@ function montheme_pagination(){
 
 // Fonction Inscription
 function postUserRegisterForm (){
-    $userData = ['role' => 'custom_contributor'];
+    $userData = ['role' => 'author'];
     $userData = array_merge($userData, $_POST);
     unset($userData['_wp_http_referer']);
     unset($userData['action']);
+    
     
     wp_insert_user($userData);
     wp_redirect($_POST['_wp_http_referer']);
     exit();
 }
-add_action('admin_post_wpregister_marmishlag_form', 'postUserRegisterForm');
-add_action('admin_post_nopriv_wpregister_marmishlag_form', 'postUserRegisterForm');
 
+add_action('admin_post_wpregister_marmishlag_form', 'postUserRegisterForm');
 
 // Redirection à la login/déconnexion
 function ps_redirect(){
@@ -237,5 +237,4 @@ if ( !empty( $terms ) ){
     $term = array_shift( $terms );
     echo $term->slug;
 }
-
 ?>
