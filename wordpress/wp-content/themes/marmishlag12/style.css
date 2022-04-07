@@ -5,6 +5,101 @@ Version: 1.0.0
 Author: Le groupe 12
 */
 
+@import url("https://fonts.googleapis.com/css?family=Allura|Rubik+Mono+One");
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;700&display=swap');
+
 body{
-    background-color: red;
+    background-color: #fae8ff;
+    overflow-x: hidden;
+    font-family: 'Montserrat';
 }
+
+main {
+  width: 70vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.6;
+  }
+  
+  .single-post-title {
+    font-family: "Allura", cursive;
+    font-weight: normal;
+    font-size: 15rem;
+    color: rgb(162 28 175);
+  }
+  
+  li {
+    font-weight: bold;
+  }
+  
+  p {
+    width: 70%;
+    font-size: 1.3rem;
+  }
+  
+  .single-post-image {
+    width: 50vw;
+    height: 50vh;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: auto;
+    z-index: 2;
+  }
+
+  .instructions ul{
+    column-count: 1;
+    width: 50vw;
+  }
+
+  .instructions ul li{
+    list-style: none;
+    margin-bottom: 1em;
+  }
+  .instructions ul li div{
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  .instructions ul li p{
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  
+  @media screen and (min-width: 900px) {
+    .single-post-title {
+      font-size: 7rem;
+    }
+  
+    ul {
+      column-count: 2;
+      column-gap: 50px;
+    }
+  
+    ul.four-col {
+      column-count: 4;
+    }
+  
+    figure {
+      width: 90%;
+    }
+  }
+
+  .link-underline {
+		border-bottom-width: 0;
+		background-image: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff);
+		background-size: 0 3px;
+		background-position: 0 100%;
+		background-repeat: no-repeat;
+		transition: background-size .5s ease-in-out;
+	}
+
+	.link-underline-black {
+		background-image: linear-gradient(transparent, transparent), linear-gradient(#a31caf, #a31caf);
+	}
+
+	.link-underline:hover {
+		background-size: 100% 3px;
+		background-position: 0 100%
+	}

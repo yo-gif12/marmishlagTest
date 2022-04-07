@@ -1,9 +1,21 @@
 <?php
 
-function cptui_register_my_taxes() {
+function wphetic_theme_support(){
+    add_theme_support('title-tag');
+    add_theme_support('post-thumbnails');
+    add_theme_support('custom-logo');
+    add_theme_support('menus');
+    add_theme_support('header', 'En tête de menu');
+    add_image_size('post-thumbnail-crop', 350, 215, true);
+    remove_image_size('medium');
+    add_image_size('medium', 700, 700);
+}
+add_action('after_setup_theme', 'wphetic_theme_support');
 
+// Taxonomies
+function cptui_register_my_taxes() {
 	/**
-	 * Taxonomy: Types de recettes.
+	 * Taxonomie: Types de recettes.
 	 */
 
 	$labels = [
@@ -35,7 +47,7 @@ function cptui_register_my_taxes() {
 	register_taxonomy( "types_recettes", [ "recettes2" ], $args );
 
 	/**
-	 * Taxonomy: Coups de cœur.
+	 * Taxonomie: Coups de cœur.
 	 */
 
 	$labels = [
@@ -75,7 +87,6 @@ function cptui_register_my_taxes() {
 		"singular_name" => __( "Gastronomie", "custom-post-type-ui" ),
 	];
 
-	
 	$args = [
 		"label" => __( "Gastronomies", "custom-post-type-ui" ),
 		"labels" => $labels,
@@ -100,7 +111,7 @@ function cptui_register_my_taxes() {
 }
 add_action( 'init', 'cptui_register_my_taxes' );
 
-
+// Custom post type
 function cptui_register_my_cpts() {
 
 	/**
@@ -134,7 +145,7 @@ function cptui_register_my_cpts() {
 		"rewrite" => [ "slug" => "recettes2", "with_front" => true ],
 		"query_var" => true,
 		"menu_icon" => "dashicons-carrot",
-		"supports" => [ "title", "editor", "excerpt", "thumbnail", "custom-fields" ],
+		"supports" => [ "title", "editor", "thumbnail", "custom-fields" ],
 		"show_in_graphql" => false,
         "capabilities" => array(
             "edit_post" => "edit_recipes",
@@ -145,20 +156,23 @@ function cptui_register_my_cpts() {
 
 	register_post_type( "recettes2", $args );
 }
-
 add_action( 'init', 'cptui_register_my_cpts' );
 
-function wphetic_theme_support(){
-    add_theme_support('title-tag');
-    add_theme_support('post-thumbnails');
-    add_theme_support('custom-logo');
-    add_theme_support('menus');
-    add_theme_support('header', 'En tête de menu');
-    add_image_size('post-thumbnail-crop', 350, 215, true);
-    remove_image_size('medium');
-    add_image_size('medium', 700, 700);
+// Autorisation de téléversement d'image mise en avant pour le custom_contributor
+if ( current_user_can('custom_contributor') && !current_user_can('upload_files') )
+add_action('admin_init', 'allow_contributor_uploads');
+function allow_contributor_uploads() {
+     $contributor = get_role('custom_contributor');
+     $contributor->add_cap('upload_files');
 }
-add_action('after_setup_theme', 'wphetic_theme_support');
+
+// Autorisation de téléversement d'image mise en avant pour le custom_moderator
+if ( current_user_can('custom_moderator') && !current_user_can('upload_files') )
+add_action('admin_init', 'allow_moderator_uploads');
+function allow_moderator_uploads() {
+        $moderator = get_role('custom_moderator');
+        $moderator->add_cap('upload_files');
+}
 
 // Ajout du framework CSS Tailwind
 function wphetic_tailwind(){
@@ -168,22 +182,11 @@ add_action('wp_enqueue_scripts', 'wphetic_tailwind');
 
 // Ajout de notre feuille de style
 function wphetic_mycss(){
-    wp_enqueue_style('my_style_css', get_template_directory_uri() . 'assets/css/style.css', [], false, true);
+    wp_enqueue_style('style', get_stylesheet_uri());
 }
 add_action('wp_enqueue_scripts', 'wphetic_mycss');
 
-// Test : Changement du lien de redirection lors du clic sur le logo de login par défaut
-function wphetic_login_headerurl($url){
-    return 'https://google.com';
-}
-add_filter('login_headerurl', 'wphetic_login_headerurl');
-
-// Test : Changement du texte du footer côté admin
-function wphetic_admin_footertext($text){
-    return '<3 ' . $text . ' <3';
-}
-add_filter('admin_footer_text', 'wphetic_admin_footertext');
-
+// Fonction pagination
 function montheme_pagination(){
     $pages = paginate_links(['type' => 'array']);
     if($pages === null){
@@ -193,9 +196,9 @@ function montheme_pagination(){
     echo '<ul class="inline-flex -space-x-px">';
     foreach($pages as $page){
         $active = strpos($page, 'current') !== false;
-        $class = 'bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white';
+        $class = 'bg-white border border-gray-300 text-gray-500 hover:bg-fuchsia-100 hover:text-gray-700 leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white';
         if($active){
-            $class = 'bg-blue-50 border border-gray-300 text-blue-600 hover:bg-blue-100 hover:text-blue-700  py-2 px-3 dark:border-gray-700 dark:bg-gray-700 dark:text-white';
+            $class = 'bg-fuchsia-700 border border-fuchsia-700 text-white  py-2 px-3 dark:border-gray-700 dark:bg-gray-700 dark:text-white';
         }
         echo '<li>';
         echo str_replace('page-numbers', $class, $page);
@@ -203,7 +206,36 @@ function montheme_pagination(){
     }
     echo '</ul>';
     echo '</nav>';
-    // var_dump($pages);
+}
+
+// Fonction Inscription
+function postUserRegisterForm (){
+    $userData = ['role' => 'custom_contributor'];
+    $userData = array_merge($userData, $_POST);
+    unset($userData['_wp_http_referer']);
+    unset($userData['action']);
+    
+    wp_insert_user($userData);
+    wp_redirect($_POST['_wp_http_referer']);
+    exit();
+}
+add_action('admin_post_wpregister_marmishlag_form', 'postUserRegisterForm');
+add_action('admin_post_nopriv_wpregister_marmishlag_form', 'postUserRegisterForm');
+
+
+// Redirection à la login/déconnexion
+function ps_redirect(){
+	wp_redirect( home_url() );
+	exit();
+}
+add_action('wp_logout','ps_redirect');
+add_action('wp_login','ps_redirect');
+
+$terms = get_the_terms( $post->ID, 'your-taxonomy' );
+if ( !empty( $terms ) ){
+    // get the first term
+    $term = array_shift( $terms );
+    echo $term->slug;
 }
 
 ?>

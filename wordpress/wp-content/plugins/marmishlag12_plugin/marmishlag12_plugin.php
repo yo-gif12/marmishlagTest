@@ -15,14 +15,6 @@ register_activation_hook(__FILE__, function(){
         'delete_posts' => true,
     ));
     
-    // Autorisation de téléversement d'image mise en avant pour le custom_contributor
-    if ( current_user_can('custom_contributor') && !current_user_can('upload_files') )
-    add_action('admin_init', 'allow_contributor_uploads');
-    function allow_contributor_uploads() {
-         $contributor = get_role('custom_contributor');
-         $contributor->add_cap('upload_files');
-    }
-    
     add_role('custom_moderator', 'Custom Moderator', array(
         'read' => true,
         'edit_posts' => true,
@@ -34,15 +26,6 @@ register_activation_hook(__FILE__, function(){
         'delete_others_posts' => true,
         'publish_posts' => true,
     ));
-    
-    // Autorisation de téléversement d'image mise en avant pour le custom_moderator
-    if ( current_user_can('custom_moderator') && !current_user_can('upload_files') )
-    add_action('admin_init', 'allow_moderator_uploads');
-    function allow_moderator_uploads() {
-         $moderator = get_role('custom_moderator');
-         $moderator->add_cap('upload_files');
-    }
-
 });
 
 register_deactivation_hook(__FILE__, function(){
